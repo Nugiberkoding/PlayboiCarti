@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nugi's Bio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'IBM Plex Mono', monospace;
+      background-color: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+
+    .logo {
+      max-width: 360px;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .nav {
+      text-align: right;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+
+    #typingText {
+      border-right: 2px solid black;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    /* Make all links black and keep underline */
+    a {
+      color: black;
+      text-decoration: underline;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    audio {
+      margin: 2px 0;
+    }
+
+    footer {
+      margin-top: 50px; /* move footer up a bit */
+      font-size: 12px;
+      color: #000000;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #langToggle {
+      background: none;
+      border: none;
+      color: black;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      user-select: none;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <span id="typingText"></span>
+    </div>
+
+    <img src="carti.png" alt="Logo" class="logo" />
+
+    <p id="para1"><strong>Playboi Carti</strong>, yang memiliki nama asli Jordan Terrell Carter, adalah seorang rapper, penyanyi, dan penulis lagu asal Atlanta, Georgia, Amerika Serikat. Lahir pada 13 September 1995, <strong>Carti</strong> dikenal dengan gaya musik eksperimental serta estetika visual yang unik dan kontroversial.</p>
+
+    <p id="para2"> Profil lengkap Playboi Carti:</p>
+
+    <ul>
+      <li><a href="biodata.html" id="link1">Biodata</a></li>
+      <li><a href="karir.html" id="link2">Karir</a></li>
+      <li><a href="musik.html" id="link3">Musik</a></li>
+      <li><a href="kehidupan.html" id="link4">Kehidupan</a></li>
+    </ul>
+
+    <p id="para3"><strong>Playboi Carti - Balance</strong></p>
+
+    <audio controls autoplay>
+      <source src="Playboi Carti - Balance (Prod.LHBeats).mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <footer>
+      <button id="langToggle" aria-label="Toggle language">Bahasa</button>
+      <span>&copy; 2025 nugi. All rights reserved.</span>
+    </footer>
+  </div>
+
+  <script>
+    // Typing animation text array
+    const texts = ["Playboi Carti", "Jordan Terrell Carter", "0pium Baby"];
+    const target = document.getElementById("typingText");
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+      const currentText = texts[textIndex];
+      if (!isDeleting) {
+        target.textContent = currentText.substring(0, charIndex) + (charIndex < currentText.length ? '|' : '');
+
+        if (charIndex < currentText.length) {
+          charIndex++;
+          setTimeout(type, 100);
+        } else {
+          isDeleting = true;
+          setTimeout(type, 2000);
+        }
+      } else {
+        target.textContent = currentText.substring(0, charIndex) + '|';
+
+        if (charIndex > 0) {
+          charIndex--;
+          setTimeout(type, 50);
+        } else {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          setTimeout(type, 500);
+        }
+      }
+    }
+
+    type();
+
+    // Language toggle functionality
+    const langToggle = document.getElementById('langToggle');
+    let isBahasa = true;
+
+    const textsBahasa = {
+      para1: "<strong>Playboi Carti</strong>, yang memiliki nama asli Jordan Terrell Carter, adalah seorang rapper, penyanyi, dan penulis lagu asal Atlanta, Georgia, Amerika Serikat. Lahir pada 13 September 1995, <strong>Carti</strong> dikenal dengan gaya musik eksperimental serta estetika visual yang unik dan kontroversial.",
+      para2: "Profil lengkap playboi carti:",
+      link1: "Biodata",
+      link2: "Karir",
+      link3: "Musik",
+      link4: "Kehidupan",
+      para3: "<strong>Playboi Carti - Balance</strong>",
+      langBtn: "Bahasa"
+    };
+
+    const textsEnglish = {
+      para1: "<strong>Playboi Carti</strong>, whose real name is Jordan Terrell Carter, is a rapper, singer, and songwriter from Atlanta, Georgia, United States. Born on September 13, 1995, <strong>Carti</strong> is known for his experimental music style and unique, controversial visual aesthetics.",
+      para2: "playboi carti full profile:",
+      link1: "Bio",
+      link2: "Career",
+      link3: "Music",
+      link4: "Life",
+      para3: "<strong>Playboi Carti - Balance</strong>",
+      langBtn: "English"
+    };
+
+    langToggle.addEventListener('click', () => {
+      isBahasa = !isBahasa;
+      if (isBahasa) {
+        document.getElementById('para1').innerHTML = textsBahasa.para1;
+        document.getElementById('para2').textContent = textsBahasa.para2;
+        document.getElementById('link1').textContent = textsBahasa.link1;
+        document.getElementById('link2').textContent = textsBahasa.link2;
+        document.getElementById('link3').textContent = textsBahasa.link3;
+        document.getElementById('link4').textContent = textsBahasa.link4;
+        document.getElementById('para3').innerHTML = textsBahasa.para3;
+        langToggle.textContent = textsBahasa.langBtn;
+      } else {
+        document.getElementById('para1').innerHTML = textsEnglish.para1;
+        document.getElementById('para2').textContent = textsEnglish.para2;
+        document.getElementById('link1').textContent = textsEnglish.link1;
+        document.getElementById('link2').textContent = textsEnglish.link2;
+        document.getElementById('link3').textContent = textsEnglish.link3;
+        document.getElementById('link4').textContent = textsEnglish.link4;
+        document.getElementById('para3').innerHTML = textsEnglish.para3;
+        langToggle.textContent = textsEnglish.langBtn;
+      }
+    });
+  </script>
+</body>
+</html>
