@@ -39,10 +39,39 @@
       display: inline-block;
     }
 
-    /* Make all links black and keep underline */
     a {
+      position: relative;
       color: black;
       text-decoration: underline;
+      padding: 2px 4px;
+      z-index: 1;
+      transition: color 0.2s ease-in-out;
+    }
+
+    a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      border: 2px solid black;
+      border-radius: 0;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease-in-out;
+      z-index: -1;
+    }
+
+    a:hover,
+    a:active {
+      color: white;
+    }
+
+    a:hover::before,
+    a:active::before {
+      transform: scaleY(1);
     }
 
     ul {
@@ -59,7 +88,7 @@
     }
 
     footer {
-      margin-top: 50px; /* move footer up a bit */
+      margin-top: 50px;
       font-size: 12px;
       color: #000000;
       max-width: 700px;
@@ -94,9 +123,11 @@
 
     <img src="carti.png" alt="Logo" class="logo" />
 
-    <p id="para1"><strong>Playboi Carti</strong>, yang memiliki nama asli Jordan Terrell Carter, adalah seorang rapper, penyanyi, dan penulis lagu asal Atlanta, Georgia, Amerika Serikat. Lahir pada 13 September 1995, <strong>Carti</strong> dikenal dengan gaya musik eksperimental serta estetika visual yang unik dan kontroversial.</p>
+    <p id="para1">
+      <a href="biodata.html"><strong>Playboi Carti</strong></a>, yang memiliki nama asli Jordan Terrell Carter, adalah seorang rapper, penyanyi, dan penulis lagu asal Atlanta, Georgia, Amerika Serikat. Lahir pada 13 September 1995, <a href="biodata.html"><strong>Carti</strong></a> dikenal dengan gaya musik eksperimental serta estetika visual yang unik dan kontroversial.
+    </p>
 
-    <p id="para2"> Profil lengkap Playboi Carti:</p>
+    <p id="para2">Profil lengkap Playboi Carti:</p>
 
     <ul>
       <li><a href="biodata.html" id="link1">Biodata</a></li>
@@ -119,7 +150,6 @@
   </div>
 
   <script>
-    // Typing animation text array
     const texts = ["Playboi Carti", "Jordan Terrell Carter", "0pium Baby"];
     const target = document.getElementById("typingText");
 
@@ -131,7 +161,6 @@
       const currentText = texts[textIndex];
       if (!isDeleting) {
         target.textContent = currentText.substring(0, charIndex) + (charIndex < currentText.length ? '|' : '');
-
         if (charIndex < currentText.length) {
           charIndex++;
           setTimeout(type, 100);
@@ -141,7 +170,6 @@
         }
       } else {
         target.textContent = currentText.substring(0, charIndex) + '|';
-
         if (charIndex > 0) {
           charIndex--;
           setTimeout(type, 50);
@@ -155,13 +183,12 @@
 
     type();
 
-    // Language toggle functionality
     const langToggle = document.getElementById('langToggle');
     let isBahasa = true;
 
     const textsBahasa = {
-      para1: "<strong>Playboi Carti</strong>, yang memiliki nama asli Jordan Terrell Carter, adalah seorang rapper, penyanyi, dan penulis lagu asal Atlanta, Georgia, Amerika Serikat. Lahir pada 13 September 1995, <strong>Carti</strong> dikenal dengan gaya musik eksperimental serta estetika visual yang unik dan kontroversial.",
-      para2: "Profil lengkap playboi carti:",
+      para1: '<a href="biodata.html"><strong>Playboi Carti</strong></a>, yang memiliki nama asli Jordan Terrell Carter, adalah seorang rapper, penyanyi, dan penulis lagu asal Atlanta, Georgia, Amerika Serikat. Lahir pada 13 September 1995, <a href="biodata.html"><strong>Carti</strong></a> dikenal dengan gaya musik eksperimental serta estetika visual yang unik dan kontroversial.',
+      para2: "Profil lengkap Playboi Carti:",
       link1: "Biodata",
       link2: "Karir",
       link3: "Musik",
@@ -171,8 +198,8 @@
     };
 
     const textsEnglish = {
-      para1: "<strong>Playboi Carti</strong>, whose real name is Jordan Terrell Carter, is a rapper, singer, and songwriter from Atlanta, Georgia, United States. Born on September 13, 1995, <strong>Carti</strong> is known for his experimental music style and unique, controversial visual aesthetics.",
-      para2: "playboi carti full profile:",
+      para1: '<a href="biodata.html"><strong>Playboi Carti</strong></a>, whose real name is Jordan Terrell Carter, is a rapper, singer, and songwriter from Atlanta, Georgia, United States. Born on September 13, 1995, <a href="biodata.html"><strong>Carti</strong></a> is known for his experimental music style and unique, controversial visual aesthetics.',
+      para2: "Playboi Carti full profile:",
       link1: "Bio",
       link2: "Career",
       link3: "Music",
@@ -183,25 +210,15 @@
 
     langToggle.addEventListener('click', () => {
       isBahasa = !isBahasa;
-      if (isBahasa) {
-        document.getElementById('para1').innerHTML = textsBahasa.para1;
-        document.getElementById('para2').textContent = textsBahasa.para2;
-        document.getElementById('link1').textContent = textsBahasa.link1;
-        document.getElementById('link2').textContent = textsBahasa.link2;
-        document.getElementById('link3').textContent = textsBahasa.link3;
-        document.getElementById('link4').textContent = textsBahasa.link4;
-        document.getElementById('para3').innerHTML = textsBahasa.para3;
-        langToggle.textContent = textsBahasa.langBtn;
-      } else {
-        document.getElementById('para1').innerHTML = textsEnglish.para1;
-        document.getElementById('para2').textContent = textsEnglish.para2;
-        document.getElementById('link1').textContent = textsEnglish.link1;
-        document.getElementById('link2').textContent = textsEnglish.link2;
-        document.getElementById('link3').textContent = textsEnglish.link3;
-        document.getElementById('link4').textContent = textsEnglish.link4;
-        document.getElementById('para3').innerHTML = textsEnglish.para3;
-        langToggle.textContent = textsEnglish.langBtn;
-      }
+      const lang = isBahasa ? textsBahasa : textsEnglish;
+      document.getElementById('para1').innerHTML = lang.para1;
+      document.getElementById('para2').textContent = lang.para2;
+      document.getElementById('link1').textContent = lang.link1;
+      document.getElementById('link2').textContent = lang.link2;
+      document.getElementById('link3').textContent = lang.link3;
+      document.getElementById('link4').textContent = lang.link4;
+      document.getElementById('para3').innerHTML = lang.para3;
+      langToggle.textContent = lang.langBtn;
     });
   </script>
 </body>
